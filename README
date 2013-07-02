@@ -18,6 +18,11 @@ You will need the following libraries and their headers/development packages:
   * libxml2
   * ffmpeg
 
+Debian squeeze install (x86 + amd64)
+-----------------------------------
+
+sudo apt-get install glutg3 glutg3-dev libxml2 libxml2-dbg ffmpeg ffmpeg-dbg build-essential gcc 
+
 Compile the program by running 'make' in this directory. Install by running
 'make install' (this will usually have to be done as root, but the location
 can be edited in the Makefile).
