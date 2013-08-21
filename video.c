@@ -73,7 +73,8 @@ int video_init( void ) {
 	packet_queue_init( &audio_queue );
 	frame_queue_init( &video_queue );
 
-	avio_set_interrupt_cb( video_stopped );
+/*	url_set_interrupt_cb( video_stopped );*/
+
 	
 	return 0;
 }
@@ -305,7 +306,7 @@ int video_open( const char *filename ) {
 	if( !filename )
 		return -1;
 		
-	if( avformat_open_input( &format_context, filename, NULL, NULL ) != 0 ) {
+	if( av_open_input_file( &format_context, filename, NULL, 0, NULL ) != 0 ) {
 		fprintf( stderr, "Warning: Error opening video file '%s'\n", filename );
 		return -1;
 	}
@@ -405,8 +406,10 @@ int video_open( const char *filename ) {
 		fprintf( stderr, "Warning: Couldn't start video reader thread\n" );
 		return -1;
 	}
-		
+    static const AVIOInterruptCB int_cb={ video_stopped, NULL};
+    format_context->interrupt_callback=int_cb;		
 	return 0;
+
 }
 
 struct texture *video_texture( void ) {
